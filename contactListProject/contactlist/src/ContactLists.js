@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 
 class ContactLists extends Component {
+  // <button classnName = contact-remove>
+        // passing onDeleteContact method from parent component(app)
+
   render(){
     return(
       <ol className='contact-list'>
@@ -13,7 +16,8 @@ class ContactLists extends Component {
                   <p>{contact.name}</p>
                   <p>{contact.email}</p>
                 </div>
-                <button className='contact-remove'>
+
+                <button className='contact-remove'onClick={() => this.props.onDeleteContact(contact)} >
                   remove
                 </button>
               </li>
