@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import escapeRegExp from 'escape-string-regexp';
 import sortBy from 'sort-by'
 
+import {Link} from 'react-router-dom';
+
 //
 // // this is a example of stateless functional component
 // function ContactLists(props){
@@ -89,11 +91,11 @@ class ContactLists extends Component {
                  placeholder="Search Contact"
                  value={this.state.query}
                  onChange={(event) => this.updateQuery(event.target.value)}></input>
-          <a
-            href="#create"
+          <Link
+            to="/create"
             onClick={()=>{this.props.changeScreen()}}
             className="contact-add"
-          >add</a>
+          >add</Link>
 
         </div>
         {
