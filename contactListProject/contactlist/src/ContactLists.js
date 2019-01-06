@@ -40,8 +40,7 @@ import sortBy from 'sort-by'
 
 
 class ContactLists extends Component {
-  // <button classnName = contact-remove>
-        // passing onDeleteContact method from parent component(app)
+
   static propTypes = {
     contacts: PropTypes.array.isRequired,
     onDeleteContact: PropTypes.func.isRequired
@@ -58,30 +57,47 @@ class ContactLists extends Component {
       query: query.trim()
     })
   }
-
+  clearQuery = () => {
+    this.setState({
+      query: ''
+    })
+  }
   render(){
+    // object destructuring:
+    // intializing variable so that we dont have to use this.props or this.state
+    const {contacts, onDeleteContact} = this.props;
+    const {query} = this.state;
+
     let showingContacts
-    if(this.state.query){
+    if(query){
       const match = new RegExp(escapeRegExp(this.state.query), 'i')
-      showingContacts = this.props.contacts.filter((contact) => match.test(contact.name))
+      showingContacts = contacts.filter((contact) => match.test(contact.name))
     }
     else{
-      showingContacts = this.props.contacts
+      showingContacts = contacts
     }
 
     showingContacts.sort(sortBy('name'))
 
     return(
       <div className='contact-container'>
-        {JSON.stringify(this.state)}
 
         <div className='contact-search'>
-          <input className='contact-search-box'
+          <input
+          className='contact-search-box'
                  type='text'
                  placeholder="Search Contact"
                  value={this.state.query}
                  onChange={(event) => this.updateQuery(event.target.value)}/>
         </div>
+        {
+          showingContacts.length !== contacts.length &&(
+            <div className = "count-contact">
+              <span>Now showing {showingContacts.length} of {contacts.length} total</span>
+              <button onClick= {() => this.clearQuery() }>Show all</button>
+            </div>
+          )
+        }
 
         <ol className='contact-list'>
             {showingContacts.map((contact)=> (
@@ -94,7 +110,7 @@ class ContactLists extends Component {
                     <p>{contact.email}</p>
                   </div>
 
-                  <button className='contact-remove'onClick={() => this.props.onDeleteContact(contact)} >
+                  <button className='contact-remove'onClick={() => onDeleteContact(contact)} >
                     remove
                   </button>
                 </li>
