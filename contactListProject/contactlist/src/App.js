@@ -5,27 +5,18 @@ import * as ContactsAPI from './utils/ContactsAPI';
 
 class App extends Component {
   state={
-    contacts : [
-      {
-        "id": "ryan",
-        "name": "Ryan Florence",
-        "email": "ryan@reacttraining.com",
-        "avatarURL": "http://localhost:5001/ryan.jpg"
-      },
-      {
-        "id": "michael",
-        "name": "Michael Jackson",
-        "email": "michael@reacttraining.com",
-        "avatarURL": "http://localhost:5001/michael.jpg"
-      },
-      {
-        "id": "tyler",
-        "name": "Tyler McGinnis",
-        "email": "tyler@reacttraining.com",
-        "avatarURL": "http://localhost:5001/tyler.jpg"
-      }
+    contacts:[
     ]
 
+  }
+
+  componentDidMount(){
+    // this function from ContactsAPI file is returning a promise therefore we
+    // use .then
+    ContactsAPI.getAll().then((contacts)=> {
+      // can delete since names are the same
+      this.setState({contacts: contacts})
+    })
   }
 
   removeContact = (contact) => {
