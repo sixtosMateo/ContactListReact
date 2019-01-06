@@ -25,6 +25,8 @@ class App extends Component {
       // setting array contacts to previous state BUT filtered JS function to remove contact
       contacts: state.contacts.filter((c) => c.id !== contact.id)
     }))
+
+    ContactsAPI.remove(contact)
   }
 
 
